@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/popup"
+    android:gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="50dp">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_delete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="20dp"
+        android:layout_marginTop="35dp"
+        app:cardBackgroundColor="@color/my_light_gray"
+        app:cardCornerRadius="20dp"
+        android:layout_gravity="bottom">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="50dp"
+            >
+            <ImageView
+                android:id="@+id/delete_icon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/baseline_delete_outline_black_18dp"
+                android:alpha="0.7"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="11dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_toRightOf="@+id/delete_icon"
+                android:gravity="center"
+                android:background="@android:color/transparent"
+                android:fontFamily="@font/montserrat"
+                android:text="Delete"
+                android:textColor="@color/my_dark_gray"
+                android:textAllCaps="false"
+                android:textSize="21sp"
+                android:textStyle="bold"/>
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <ProgressBar
+        android:id="@+id/progress_delete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:visibility="invisible"/>
+</LinearLayout>
+
+

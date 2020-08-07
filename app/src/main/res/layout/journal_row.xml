@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/journal_row"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="5dp"
+    app:cardCornerRadius="15dp"
+    android:alpha="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:paddingHorizontal="5dp"
+            android:elevation="10dp"
+            android:background="@color/my_gray_blue"
+            android:alpha="0.6"
+            android:gravity="end"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/journal_row_username"
+                android:fontFamily="@font/montserrat"
+                android:text="Ritu"
+                android:textColor="@android:color/white"
+                android:padding="7dp"
+                android:layout_weight="1"
+                android:textSize="17sp"
+                android:gravity="start"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+
+            <ImageButton
+                android:id="@+id/journal_row_share_button"
+                android:src="@android:drawable/ic_menu_share"
+                android:background="@android:color/transparent"
+                android:paddingTop="4dp"
+                android:paddingRight="3dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <CheckBox
+                android:id="@+id/checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@android:color/white"
+                android:visibility="gone"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/my_gray_blue"
+            >
+
+            <ImageView
+                android:id="@+id/jourrnal_image_list"
+                android:layout_width="match_parent"
+                android:layout_height="234dp"
+                android:adjustViewBounds="true"
+                android:cropToPadding="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/journal" />
+
+            <TextView
+                android:id="@+id/journal_title_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/kalam_bold"
+                android:padding="9dp"
+                android:text="Title"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                />
+
+            <TextView
+                android:id="@+id/journal_thought_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat"
+                android:paddingRight="9dp"
+                android:paddingLeft="9dp"
+                android:paddingBottom="7dp"
+                android:text="Thoughts..."
+                android:textColor="@android:color/white"
+                android:textSize="15sp"
+                android:textStyle="normal" />
+
+            <TextView
+                android:id="@+id/journal_timestamp_list"
+
+                android:paddingRight="11dp"
+                android:paddingBottom="8dp"
+
+                android:textColor="@android:color/white"
+                android:text="Date created"
+                android:gravity="right"
+                android:textStyle="italic"
+                android:textSize="11dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+</androidx.cardview.widget.CardView>
