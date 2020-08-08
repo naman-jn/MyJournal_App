@@ -115,9 +115,7 @@ public class JournalListActivity extends AppCompatActivity {
 
         journalList=new ArrayList<>();
 
-        if(currentUser!=null && firebaseAuth != null){
-            getJournals(this);
-        }
+        getJournals(this);
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -163,10 +161,10 @@ public class JournalListActivity extends AppCompatActivity {
             case R.id.action_signout:
                 if (currentUser != null && firebaseAuth != null) {
                     firebaseAuth.signOut();
-
                     startActivity(new Intent(JournalListActivity.this,
                             MainActivity.class));
-                             finish();
+                    finish();
+
                 }
                 break;
         }

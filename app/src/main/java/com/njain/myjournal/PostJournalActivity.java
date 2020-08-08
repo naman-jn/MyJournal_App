@@ -382,6 +382,11 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(PostJournalActivity.this,JournalListActivity.class));
+    }
 
     @Override
     public void finish() {

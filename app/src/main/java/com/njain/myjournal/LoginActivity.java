@@ -74,6 +74,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 9001;
     private GoogleSignInClient mGoogleSignInClient;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,19 +89,22 @@ public class LoginActivity extends AppCompatActivity {
 
         firebaseAuth=FirebaseAuth.getInstance();
 
-        authStateListener=new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                currentUser= firebaseAuth.getCurrentUser();
 
-                if(currentUser!=null){
-
-                }else{
-
-                }
-
-            }
-        };
+//        if(isSignedIn){
+//            authStateListener=new FirebaseAuth.AuthStateListener() {
+//                @Override
+//                public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+//                    currentUser= firebaseAuth.getCurrentUser();
+//
+//                    if(currentUser!=null){
+//
+//                    }else{
+//
+//                    }
+//
+//                }
+//            };
+//        }
 
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -260,9 +264,9 @@ public class LoginActivity extends AppCompatActivity {
                             journalApi.setUserId(user.getUid());
                             journalApi.setUsername(user.getDisplayName());
 
-                            if(user!=null && firebaseAuth != null){
-                                collectionReference.whereEqualTo("userId",user.getUid())
-                                        .addSnapshotListener(new EventListener<QuerySnapshot>() {
+
+                            collectionReference.whereEqualTo("userId",user.getUid())
+                                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
                                             @RequiresApi(api = Build.VERSION_CODES.N)
                                             @Override
                                             public void onEvent(@androidx.annotation.Nullable QuerySnapshot queryDocumentSnapshots,
@@ -291,11 +295,11 @@ public class LoginActivity extends AppCompatActivity {
                                                                 }
                                                             });
                                                 }
+                                                if (error != null) {
+                                                    Log.e("Firestore", "Error listening for data", error);
+                                                }
                                             }
                                         });
-
-                            }
-
 
                         } else {
                             // If sign in fails, display a message to the user.
