@@ -109,8 +109,8 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
 
             Picasso.get()
                     .load(imgUrl)
+                    .resize(675,405)
                     .placeholder(R.drawable.journal)
-                    .fit()
                     .into(imageView);
             saveButton.setText("Update");
 
@@ -377,15 +377,15 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
     }
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
-                = (ConnectivityManager) getSystemService(this.CONNECTIVITY_SERVICE);
+                = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
         startActivity(new Intent(PostJournalActivity.this,JournalListActivity.class));
+        finish();
     }
 
     @Override

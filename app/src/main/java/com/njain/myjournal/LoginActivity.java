@@ -117,7 +117,7 @@ public class LoginActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                login.setEnabled(false);
                 String email=emailEditText.getText().toString().trim();
                 String password=passwordEditText.getText().toString().trim();
 
@@ -131,6 +131,7 @@ public class LoginActivity extends AppCompatActivity {
                             "Empty Fields Not Allowed",
                             Toast.LENGTH_LONG)
                             .show();
+                    login.setEnabled(true);
                 }
 
             }
@@ -165,7 +166,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-                            if(currentUser.isEmailVerified()){  //Email Verified
+//                            if(currentUser.isEmailVerified()){  //Email Verified
 
                                 String currentUserId = currentUser.getUid();
 
@@ -189,6 +190,7 @@ public class LoginActivity extends AppCompatActivity {
                                                             journalApi.setUserId(snapshot.getString("userId"));
 
                                                             startActivity(new Intent(LoginActivity.this,JournalListActivity.class));
+                                                            login.setEnabled(true);
                                                             finish();
                                                             overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
                                                         }
@@ -202,10 +204,10 @@ public class LoginActivity extends AppCompatActivity {
                                 }
 
 
-                            }
-                            else{
-                                Toast.makeText(LoginActivity.this, "Please verify email address", Toast.LENGTH_SHORT).show();
-                            }
+//                            }
+//                            else{
+//                                Toast.makeText(LoginActivity.this, "Please verify email address", Toast.LENGTH_SHORT).show();
+//                            }
 
 
                     }
@@ -215,6 +217,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onFailure(@NonNull Exception e) {
                 Toast.makeText(LoginActivity.this,e.getMessage(), Toast.LENGTH_SHORT).show();
                 progressBar.setVisibility(View.INVISIBLE);
+                login.setEnabled(true);
             }
         });
 
@@ -241,7 +244,7 @@ public class LoginActivity extends AppCompatActivity {
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
                 //Log.w(TAG, "Google sign in failed", e);
-                Toast.makeText(this, "Google sign in failed", Toast.LENGTH_SHORT).show();;
+                //Toast.makeText(this, "Google sign in failed", Toast.LENGTH_SHORT).show();;
                 // ...
             }
         }

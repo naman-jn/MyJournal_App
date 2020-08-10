@@ -1,12 +1,19 @@
 package com.njain.myjournal.adapter;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
+import android.os.StrictMode;
 import android.text.format.DateUtils;
+import android.transition.Transition;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,7 +44,11 @@ import com.njain.myjournal.PostJournalActivity;
 import com.njain.myjournal.R;
 import com.njain.myjournal.model.Journal;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 
 public class JournalRecyclerAdapter extends RecyclerView.Adapter<JournalRecyclerAdapter.ViewHolder> {
@@ -80,8 +91,8 @@ public class JournalRecyclerAdapter extends RecyclerView.Adapter<JournalRecycler
         String imgUrl = journal.getImageUrl();
         Picasso.get()
                 .load(imgUrl)
+                .resize(675,405)
                 .placeholder(R.drawable.journal)
-                .fit()
                 .into(holder.img);
 
         //Source: https://medium.com/@shaktisinh/time-a-go-in-android-8bad8b171f87
@@ -117,6 +128,9 @@ public class JournalRecyclerAdapter extends RecyclerView.Adapter<JournalRecycler
             share = itemView.findViewById(R.id.journal_row_share_button);
             journalRow = itemView.findViewById(R.id.journal_row);
 
+            StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+            StrictMode.setVmPolicy(builder.build());
+
             share.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -125,19 +139,8 @@ public class JournalRecyclerAdapter extends RecyclerView.Adapter<JournalRecycler
                     Journal journal = journalList.get(position);
 
                     String imageUrl = journal.getImageUrl();
-                    String title = journal.getTitle();
-                    String thought = journal.getThought();
 
-                    String msgToSend = "Title: " + title +
-                            "\n\n Thought: " + thought +
-                            "\n\n Image URL: " + imageUrl;
-
-                    // send the message through implicit action_send
-                    Intent shareMsg = new Intent(Intent.ACTION_SEND);
-                    shareMsg.setType("text/plain");
-                    shareMsg.putExtra(Intent.EXTRA_SUBJECT, "My journal");
-                    shareMsg.putExtra(Intent.EXTRA_TEXT, msgToSend);
-                    context.startActivity(Intent.createChooser(shareMsg, "Share Via"));
+                    shareImage(imageUrl, context, position, journalList);
 
 
                 }
@@ -150,10 +153,13 @@ public class JournalRecyclerAdapter extends RecyclerView.Adapter<JournalRecycler
 
                     Journal journal = journalList.get(position);
 
+                    Activity activity=(Activity) context;
                     final Intent intent = new Intent(context, PostJournalActivity.class);
                     intent.putExtra("journal", journal);
                     intent.putExtra("postActionId", 1);
-                    context.startActivity(intent);
+                    activity.startActivity(intent);
+                    activity.overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
+
                 }
             });
 
@@ -174,7 +180,6 @@ public class JournalRecyclerAdapter extends RecyclerView.Adapter<JournalRecycler
                         @Override
                         public void onClick(View v) {
                             progressBar.setVisibility(View.VISIBLE);
-                            deleteJournal(getAdapterPosition());
                             final int position = getAdapterPosition();
                             final Journal journal = journalList.get(position);
                             final String userId = journal.getUserId();
@@ -217,10 +222,52 @@ public class JournalRecyclerAdapter extends RecyclerView.Adapter<JournalRecycler
 
         }
 
-
-        private void deleteJournal(int getAdapterPosition) {
-
-        }
-
     }
-}
+
+
+    public void shareImage(String url, final Context context, final int position, final List<Journal>journalList) {
+
+        Picasso.get().load(url)
+                .resize(675,405)
+                .into(new Target() {
+            @Override
+            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.putExtra(Intent.EXTRA_SUBJECT, "From Journal App");
+                shareIntent.putExtra(Intent.EXTRA_TEXT, journalList.get(position).getTitle()
+                        + "\n\n" + journalList.get(position).getThought());
+
+                shareIntent.setType("image/*");
+
+                Uri imageUri = getLocalBitmapUri(bitmap, context);
+
+                shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
+                Log.d("TAG", "onBitmapLoaded: " + imageUri.toString());
+                context.startActivity(Intent.createChooser(shareIntent, "Send Image"));
+            }
+
+            @Override
+            public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+
+            }
+
+            @Override
+            public void onPrepareLoad(Drawable placeHolderDrawable) {
+            }
+        });
+    }
+
+        public Uri getLocalBitmapUri (Bitmap bmp,Context context){
+            Uri bmpUri = null;
+            try {
+                File file = new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), "share_image_" + System.currentTimeMillis() + ".png");
+                FileOutputStream out = new FileOutputStream(file);
+                bmp.compress(Bitmap.CompressFormat.PNG, 10, out);
+                out.close();
+                bmpUri = Uri.fromFile(file);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return bmpUri;
+        }
+    }

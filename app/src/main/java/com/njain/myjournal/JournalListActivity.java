@@ -152,11 +152,9 @@ public class JournalListActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.action_add:
-                if (currentUser != null && firebaseAuth != null) {
                     startActivity(new Intent(JournalListActivity.this,
                             PostJournalActivity.class));
                     overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
-                }
                 break;
             case R.id.action_signout:
                 if (currentUser != null && firebaseAuth != null) {

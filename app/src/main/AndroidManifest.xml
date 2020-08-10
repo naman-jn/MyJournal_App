@@ -7,11 +7,9 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".util.JournalApi"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:launchMode="singleTop"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -42,7 +40,6 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".JournalListActivity"
-            android:noHistory="true"
             android:screenOrientation="portrait" />
         <activity
             android:name=".PostJournalActivity"
@@ -56,6 +53,7 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
     </application>
 
 </manifest>
