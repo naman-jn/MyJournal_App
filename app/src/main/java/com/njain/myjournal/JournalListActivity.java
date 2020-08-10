@@ -159,9 +159,17 @@ public class JournalListActivity extends AppCompatActivity {
             case R.id.action_signout:
                 if (currentUser != null && firebaseAuth != null) {
                     firebaseAuth.signOut();
-                    startActivity(new Intent(JournalListActivity.this,
-                            MainActivity.class));
-                    finish();
+                    Intent a = new Intent(Intent.ACTION_MAIN);
+                    a.addCategory(Intent.CATEGORY_HOME);
+                    a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(a);
+                    new Handler().postDelayed(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            System.exit(0);
+                        }
+                    }, 100);
 
                 }
                 break;

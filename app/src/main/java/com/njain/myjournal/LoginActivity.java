@@ -166,7 +166,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-//                            if(currentUser.isEmailVerified()){  //Email Verified
+                            if(currentUser.isEmailVerified()){  //Email Verified
 
                                 String currentUserId = currentUser.getUid();
 
@@ -204,10 +204,10 @@ public class LoginActivity extends AppCompatActivity {
                                 }
 
 
-//                            }
-//                            else{
-//                                Toast.makeText(LoginActivity.this, "Please verify email address", Toast.LENGTH_SHORT).show();
-//                            }
+                            }
+                            else{
+                                Toast.makeText(LoginActivity.this, "Please verify email address", Toast.LENGTH_SHORT).show();
+                            }
 
 
                     }
